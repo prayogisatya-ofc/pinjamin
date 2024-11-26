@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'is_active',
+        'role'
     ];
 
     /**
@@ -44,5 +48,47 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function rents()
+    {
+        return $this->hasMany(Rent::class);
+    }
+
+    public function renting()
+    {
+        return $this->rents()->whereNull('actual_return_date')->get();
+    }
+
+    public function totalBooks()
+    {
+        $total = 0;
+        foreach ($this->rents as $rent) {
+            $total += $rent->rentItems()->count();
+        }
+        return $total;
+    }
+    
+    public function getTotalBookRentedAttribute()
+    {
+        $total = 0;
+        foreach ($this->renting() as $rent) {
+            $total += $rent->rentItems()->count();
+        }
+        return $total;
+    }
+
+    public function getTotalPinaltyAttribute()
+    {
+        $total = 0;
+        foreach ($this->rents as $rent) {
+            $total += $rent->pinalty;
+        }
+        return $total;
+    }
+
+    public function bags()
+    {
+        return $this->hasMany(Bag::class);
     }
 }
