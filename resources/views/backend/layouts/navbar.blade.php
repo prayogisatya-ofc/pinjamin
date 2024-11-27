@@ -36,7 +36,7 @@
                         <div class="dropdown-divider my-1 mx-n2"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('panel.settings.index') }}">
+                        {{-- <a class="dropdown-item" href="{{ route('panel.settings.index') }}"> --}}
                             <i class="ti ti-settings me-3 ti-md"></i><span class="align-middle">Pengaturan</span>
                         </a>
                     </li>

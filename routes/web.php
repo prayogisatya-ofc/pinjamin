@@ -18,7 +18,7 @@ Route::prefix('panel')
 ->name('panel.')
 ->middleware([LoadSettings::class, 'auth', AdminOnly::class])
 ->group(function () {
-    
+
     //Route Kategori
     Route::resource('categories', CategoryController::class)
         ->names('categories')
