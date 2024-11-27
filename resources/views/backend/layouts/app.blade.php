@@ -1,8 +1,8 @@
 <!doctype html>
 
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
-    data-theme="theme-default" data-assets-path="{{ asset('assets') }}/" data-template="vertical-menu-template-no-customizer"
-    data-style="light">
+    data-theme="theme-default" data-assets-path="{{ asset('assets') }}/"
+    data-template="vertical-menu-template-no-customizer" data-style="light">
 
 <head>
     <meta charset="utf-8" />
@@ -73,7 +73,7 @@
                     <!-- Content -->
 
                     @yield('content')
-                    
+
                     <!-- / Content -->
 
                     <!-- Footer -->
