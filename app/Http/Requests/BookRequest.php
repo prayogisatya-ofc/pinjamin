@@ -21,18 +21,14 @@ class BookRequest extends FormRequest
      */
     public function rules(): array
     {
-        $routeId = $this->route('book')?->id; // Ambil ID dari route, jika ada
-
         return [
-            'code' => 'required|string|max:255|unique:books,code,' . $routeId . ',id',
+            'code' => 'required|string|max:255|unique:books,code,' . $this->route('book')?->id . ',id',
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:books,slug,' . $routeId . ',id',
-            'description' => 'nullable|string',
-            "category_id" => "required|array",
-            "category_id.*" => "required|exists:categories,id",
             'author' => 'required|string|max:255',
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'required|string',
             'stock' => 'required|integer|min:0',
+            'cover' => $this->method() === 'PUT' ? 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category' => 'required|exists:categories,id',
         ];
     }
 }

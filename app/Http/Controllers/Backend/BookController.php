@@ -2,124 +2,126 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Book;
-use Illuminate\Http\Request;
-use App\Http\Requests\BookRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Services\Backend\BookService;
+use App\Http\Requests\BookRequest;
+use App\Http\Services\FileService;
+use App\Models\Book;
+use App\Models\BookCategory;
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    protected $bookService;
-
-    public function __construct(BookService $bookService)
-    {
-        $this->bookService = $bookService;
-    }
+    public function __construct(
+        private FileService $fileService
+    ) {}
 
     public function index(Request $request)
     {
         $search = $request->query('search');
-        $categoryId = $request->query('category');
+        $category = $request->query('category');
 
         $data = Book::query();
 
         if ($search) {
-            $data->where('title', 'like', '%' . $search . '%')
-                ->orWhere('author', 'like', '%' . $search . '%')
-                ->orWhere('code', 'like', '%' . $search . '%')
-                ->orWhere('cover', 'like', '%' . $search . '%')
-                ->orWhere('stock', $search);
+            $data->where('title', 'like', '%' . $search . '%');
         }
 
-        // Filter by category jika ada
-        if ($categoryId) {
-            $data->where('category_id', $categoryId);
+        if ($category) {
+            $data->whereHas('bookCategories', function ($query) use ($category) {
+                $query->whereHas('category', function ($query) use ($category) {
+                    $query->where('slug', $category);
+                });
+            });
         }
 
         $data = $data->latest()->paginate(10);
 
-        // Ambil semua kategori untuk dropdown filter
-        $categories = $this->bookService->getCategory();
-
-        return view('backend.book.index', [
+        return view('backend.buku.index', [
             'data' => $data,
-            'categories' => $categories,
-            'selectedCategory' => $categoryId
+            'categories' => Category::all()
         ]);
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('backend.book.create', [
-            'categories' => $this->bookService->getCategory()
+        return view('backend.buku.create', [
+            'categories' => Category::all()
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(BookRequest $request)
     {
         $data = $request->validated();
 
-        $this->bookService->store($data);
+        if ($request->hasFile('cover')) {
+            $data['cover'] = $this->fileService->upload($request->file('cover'), 'covers');
+        }
 
-        return redirect()->route('book.index')->with('success', 'Book  <b>' . $request->get('title') . '</b> created successfully!');
+        $book = Book::create($data);
+
+        foreach ($request->category as $category) {
+            BookCategory::create([
+                'book_id' => $book->id,
+                'category_id' => $category
+            ]);
+        }
+
+
+        return redirect()->route('panel.books.index')->with('success', 'Buku <b>' . $request->get('title') . '</b> berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Book $book)
     {
-        $book = $this->bookService->getFirstBy('id', $id);
-
-        return view('backend.book.show', [
+        return view('backend.buku.show', [
             'book' => $book
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Book $book)
     {
-        $book = $this->bookService->getFirstBy('id', $id);
-
-        return view('backend.book.edit', [
+        return view('backend.buku.edit', [
             'book' => $book,
-            'categories' => $this->bookService->getCategory()
+            'categories' => Category::all()
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(BookRequest $request, Book $book)
     {
         $data = $request->validated();
 
-        $this->bookService->update($book, $data);
+        if ($request->hasFile('cover')) {
+            if ($book->cover) {
+                $this->fileService->delete(public_path('storage/' . $book->cover));
+            }
+            $data['cover'] = $this->fileService->upload($request->file('cover'), 'covers');
+        }
 
-        return redirect()->route('books.index')->with('success', 'Book  <b>' . $book->title . '</b> updated successfully!');
+        $book->update($data);
+
+        BookCategory::where('book_id', $book->id)->delete();
+
+        foreach ($request->category as $category) {
+            BookCategory::create([
+                'book_id' => $book->id,
+                'category_id' => $category
+            ]);
+        }
+
+        return redirect()->route('panel.books.index')->with('success', 'Buku <b>' . $request->get('title') . '</b> berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Book $book)
     {
-        $this->bookService->delete($book);
+        if ($book->cover) {
+            $this->fileService->delete(public_path('storage/' . $book->cover));
+        }
 
-        return redirect()->route('books.index')->with('success', 'Book <b>' . $book->title . '</b> deleted successfully!');
+        $book->delete();
+
+        return redirect()->back()->with('success', 'Buku <b>' . $book->title . '</b> berhasil dihapus');
     }
 }
