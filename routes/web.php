@@ -6,6 +6,7 @@ use App\Http\Middleware\LoadSettings;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Backend\BookController;
+use App\Http\Controllers\Backend\RenterController;
 use App\Http\Controllers\Backend\CategoryController;
 
 Route::get('/', function () {
@@ -28,6 +29,11 @@ Route::prefix('panel')
         //Route Buku
         Route::resource('books', BookController::class)
             ->names('books');
+
+        //Route Peminjam
+        Route::resource('renters', RenterController::class)
+            ->names('renters')
+            ->except('store', 'edit');
     });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
