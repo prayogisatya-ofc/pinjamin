@@ -33,7 +33,7 @@
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.books.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.books.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.books.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-books"></i>
                 <div data-i18n="Buku">Buku</div>
             </a>

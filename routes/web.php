@@ -26,7 +26,8 @@ Route::prefix('panel')
             ->except('create', 'show', 'edit');
 
         //Route Buku
-        Route::resource('book', BookController::class);
+        Route::resource('books', BookController::class)
+            ->names('books');
     });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
