@@ -39,7 +39,7 @@
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.renters.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.renters.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.renters.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-users"></i>
                 <div data-i18n="Peminjam">Peminjam</div>
             </a>
