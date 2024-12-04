@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\BookController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\RenterController;
+use App\Http\Controllers\Backend\ReturnController;
 use App\Http\Controllers\Backend\RentingController;
 use App\Http\Controllers\Backend\CategoryController;
 
@@ -48,6 +49,12 @@ Route::prefix('panel')
             ->only('index', 'show', 'destroy');
         Route::post('rentings/download', [RentingController::class, 'download'])->name('rentings.download');
         Route::get('rentings/download/pdf', [RentingController::class, 'pdf'])->name('rentings.pdf');
+
+        //Route Pengembalian
+        Route::resource('returns', ReturnController::class)
+            ->names('returns')
+            ->only('index', 'update');
+        Route::put('returns/{return}/update-lost', [ReturnController::class, 'updateLost'])->name('returns.update-lost');
     });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
