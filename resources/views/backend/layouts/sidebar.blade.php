@@ -45,7 +45,7 @@
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.admins.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.admins.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.admins.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-user-shield"></i>
                 <div data-i18n="Admin">Admin</div>
             </a>
@@ -56,7 +56,7 @@
             <span class="menu-header-text" data-i18n="Peminjaman">Peminjaman</span>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.rentings.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.rentings.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.rentings.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-book-upload"></i>
                 <div data-i18n="Log Peminjaman">Log Peminjaman</div>
             </a>
