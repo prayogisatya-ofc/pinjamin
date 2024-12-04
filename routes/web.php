@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\RenterController;
 use App\Http\Controllers\Backend\ReturnController;
 use App\Http\Controllers\Backend\RentingController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,8 @@ Route::prefix('panel')
     ->name('panel.')
     ->middleware([LoadSettings::class, 'auth', AdminOnly::class])
     ->group(function () {
+
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         //Route Kategori
         Route::resource('categories', CategoryController::class)
