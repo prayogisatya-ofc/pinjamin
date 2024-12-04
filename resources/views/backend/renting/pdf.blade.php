@@ -53,7 +53,7 @@
                 <th rowspan="2">Pinjam</th>
                 <th rowspan="2">Kembali</th>
                 <th rowspan="2">Dikembalikan</th>
-                <th colspan="2">Daftar Buku</th>
+                <th colspan="2">Daftar Buku</th> 
                 <th rowspan="2">Denda</th>
             </tr>
             <tr>

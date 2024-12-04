@@ -6,7 +6,9 @@ use App\Http\Middleware\LoadSettings;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Backend\BookController;
+use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\RenterController;
+use App\Http\Controllers\Backend\RentingController;
 use App\Http\Controllers\Backend\CategoryController;
 
 Route::get('/', function () {
@@ -34,6 +36,18 @@ Route::prefix('panel')
         Route::resource('renters', RenterController::class)
             ->names('renters')
             ->except('store', 'edit');
+
+        //Route Admin
+        Route::resource('admins', AdminController::class)
+            ->names('admins')
+            ->except('show');
+
+        //Route Log Peminjaman
+        Route::resource('rentings', RentingController::class)
+            ->names('rentings')
+            ->only('index', 'show', 'destroy');
+        Route::post('rentings/download', [RentingController::class, 'download'])->name('rentings.download');
+        Route::get('rentings/download/pdf', [RentingController::class, 'pdf'])->name('rentings.pdf');
     });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
