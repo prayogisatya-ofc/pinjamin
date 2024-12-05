@@ -4,12 +4,13 @@ use App\Http\Middleware\AdminOnly;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\LoadSettings;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Backend\BookController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Backend\RenterController;
 use App\Http\Controllers\Backend\ReturnController;
 use App\Http\Controllers\Backend\RentingController;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 
@@ -58,6 +59,10 @@ Route::prefix('panel')
             ->names('returns')
             ->only('index', 'update');
         Route::put('returns/{return}/update-lost', [ReturnController::class, 'updateLost'])->name('returns.update-lost');
+
+        Route::resource('settings', SettingController::class)
+            ->names('settings')
+            ->only('index', 'store');
     });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
