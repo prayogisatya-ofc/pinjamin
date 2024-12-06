@@ -62,7 +62,7 @@
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.returns.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.returns.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.returns.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-book-download"></i>
                 <div data-i18n="Pengembalian">Pengembalian</div>
             </a>
@@ -72,7 +72,7 @@
             <span class="menu-header-text" data-i18n="Pengaturan">Pengaturan</span>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.settings.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.settings.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.settings.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-settings"></i>
                 <div data-i18n="Pengaturan">Pengaturan</div>
             </a>

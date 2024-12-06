@@ -1,0 +1,1 @@
+<h1>ini halaman detail buku</h1>
