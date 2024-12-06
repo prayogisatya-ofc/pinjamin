@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\LoadSettings;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\BookController;
+use App\Http\Controllers\Frontend\BagController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Backend\RenterController;
@@ -13,10 +14,9 @@ use App\Http\Controllers\Backend\RentingController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Frontend\BookController as FrontendBookController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
@@ -60,9 +60,21 @@ Route::prefix('panel')
             ->only('index', 'update');
         Route::put('returns/{return}/update-lost', [ReturnController::class, 'updateLost'])->name('returns.update-lost');
 
+        //Route Setting
         Route::resource('settings', SettingController::class)
             ->names('settings')
             ->only('index', 'store');
     });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+//Route buku
+Route::get('books', [FrontendBookController::class, 'index'])->name('books');
+Route::get('books/{book}', [FrontendBookController::class, 'show'])->name('books.show');
+
+Route::middleware([LoadSettings::class, 'auth'])->group(function () {
+    //Route Kantong
+    Route::resource('bags', BagController::class)
+        ->names('bags')
+        ->only('index', 'store', 'destroy');
+});
