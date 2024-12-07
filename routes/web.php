@@ -8,11 +8,13 @@ use App\Http\Controllers\Backend\BookController;
 use App\Http\Controllers\Frontend\BagController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\RentController;
 use App\Http\Controllers\Backend\RenterController;
 use App\Http\Controllers\Backend\ReturnController;
 use App\Http\Controllers\Backend\RentingController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\BookController as FrontendBookController;
 
@@ -77,4 +79,14 @@ Route::middleware([LoadSettings::class, 'auth'])->group(function () {
     Route::resource('bags', BagController::class)
         ->names('bags')
         ->only('index', 'store', 'destroy');
+
+    Route::resource('rents', RentController::class)
+        ->names('rents')
+        ->only('store');
+
+    Route::resource('account', AccountController::class)
+        ->names('account')
+        ->only('index', 'update');
+
+    Route::put('account/{account}/password', [AccountController::class, 'updatePassword'])->name('account.updatePassword');
 });

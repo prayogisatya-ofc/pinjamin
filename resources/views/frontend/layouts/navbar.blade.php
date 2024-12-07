@@ -18,20 +18,25 @@
                 </button>
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link me-2 fw-medium {{ request()->routeIs('books') ? 'active' : '' }}" href="{{ route('books') }}">
+                        <a class="nav-link me-2 fw-medium {{ request()->routeIs('books') ? 'active' : '' }}"
+                            href="{{ route('books') }}">
                             <i class="ti ti-books"></i>
                         </a>
                     </li>
                     <li class="nav-item">
                         <form action="{{ route('books') }}" method="get">
                             <div class="input-group input-group-merge rounded-pill">
-                                <span class="input-group-text" id="basic-addon-search31"><i class="ti ti-search"></i></span>
-                                <input type="text" class="form-control rounded-e-pill" name="search" placeholder="Cari buku" aria-label="Cari buku" aria-describedby="basic-addon-search31">
+                                <span class="input-group-text" id="basic-addon-search31"><i
+                                        class="ti ti-search"></i></span>
+                                <input type="text" class="form-control rounded-e-pill" name="search"
+                                    placeholder="Cari buku" aria-label="Cari buku"
+                                    aria-describedby="basic-addon-search31">
                             </div>
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium ms-2 {{ request()->routeIs('bags.*') ? 'active' : '' }}" href="{{ route('bags.index') }}">
+                        <a class="nav-link fw-medium ms-2 {{ request()->routeIs('bags.*') ? 'active' : '' }}"
+                            href="{{ route('bags.index') }}">
                             <i class="ti ti-shopping-bag"></i>
                             @if (Auth::user() && Auth::user()->bags->count() > 0)
                             <span class="badge rounded-pill bg-label-danger badge-notifications">
@@ -64,14 +69,16 @@
                 </li>
                 @auth
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                    <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1 text-end d-none d-md-block">
                                 <h6 class="mb-0">{{ Auth::user()->name }}</h6>
                             </div>
                             <div class="flex-shrink-0 ms-2">
                                 <div class="avatar">
-                                    <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}" class="rounded-circle">
+                                    <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}"
+                                        class="rounded-circle">
                                 </div>
                             </div>
                         </div>
@@ -82,7 +89,8 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2">
                                         <div class="avatar">
-                                            <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}" class="rounded-circle">
+                                            <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}"
+                                                class="rounded-circle">
                                         </div>
                                     </div>
                                     <div class="flex-grow-1">
@@ -107,7 +115,9 @@
                         </li>
                         <li>
                             <div class="d-grid px-2 pt-2 pb-1">
-                                <a class="btn btn-sm btn-danger d-flex waves-effect waves-light" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a class="btn btn-sm btn-danger d-flex waves-effect waves-light"
+                                    href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <small class="align-middle">Logout</small>
                                     <i class="ti ti-logout ms-2 ti-14px"></i>
                                 </a>
