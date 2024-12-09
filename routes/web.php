@@ -19,55 +19,55 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\BookController as FrontendBookController;
 
 
-
 Auth::routes();
-
 
 Route::prefix('panel')
     ->name('panel.')
     ->middleware([LoadSettings::class, 'auth', AdminOnly::class])
     ->group(function () {
 
+        // Route Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-        //Route Kategori
+        // Route Kategori
         Route::resource('categories', CategoryController::class)
             ->names('categories')
             ->except('create', 'show', 'edit');
 
-        //Route Buku
+        // Route Buku
         Route::resource('books', BookController::class)
             ->names('books');
 
-        //Route Peminjam
+        // Route Peminjam
         Route::resource('renters', RenterController::class)
             ->names('renters')
             ->except('store', 'edit');
 
-        //Route Admin
+        // Route Admin
         Route::resource('admins', AdminController::class)
             ->names('admins')
             ->except('show');
 
-        //Route Log Peminjaman
+        // Route Log Peminjaman
         Route::resource('rentings', RentingController::class)
             ->names('rentings')
             ->only('index', 'show', 'destroy');
         Route::post('rentings/download', [RentingController::class, 'download'])->name('rentings.download');
         Route::get('rentings/download/pdf', [RentingController::class, 'pdf'])->name('rentings.pdf');
 
-        //Route Pengembalian
+        // Route Pengembalian
         Route::resource('returns', ReturnController::class)
             ->names('returns')
             ->only('index', 'update');
         Route::put('returns/{return}/update-lost', [ReturnController::class, 'updateLost'])->name('returns.update-lost');
 
-        //Route Setting
+        // Route Setting
         Route::resource('settings', SettingController::class)
             ->names('settings')
             ->only('index', 'store');
-    });
+});
 
+// Route Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //Route buku
@@ -80,13 +80,14 @@ Route::middleware([LoadSettings::class, 'auth'])->group(function () {
         ->names('bags')
         ->only('index', 'store', 'destroy');
 
+    // Route Peminjaman
     Route::resource('rents', RentController::class)
         ->names('rents')
         ->only('store');
 
+    // Route Akun
     Route::resource('account', AccountController::class)
         ->names('account')
         ->only('index', 'update');
-
     Route::put('account/{account}/password', [AccountController::class, 'updatePassword'])->name('account.updatePassword');
 });
