@@ -25,7 +25,7 @@ class ReturnController extends Controller
             if (Carbon::today() > $data->return_date) {
                 $late_fee = $settings['late_fee_per_day'];
                 $diff = ceil($data->return_date->diffInDays(Carbon::today()));
-                $data->pinalty = $diff * $late_fee;
+                $data->pinalty = $diff * $late_fee * $data->rentItems->count();
             }
             
             if ($data->lost_books > 0) {
