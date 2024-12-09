@@ -16,7 +16,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
         <li class="menu-item {{ request()->routeIs('panel.dashboard') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.dashboard') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div data-i18n="Dashboard">Dashboard</div>
             </a>
@@ -45,7 +45,7 @@
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.admins.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.admins.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.admins.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-user-shield"></i>
                 <div data-i18n="Admin">Admin</div>
             </a>
@@ -56,13 +56,13 @@
             <span class="menu-header-text" data-i18n="Peminjaman">Peminjaman</span>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.rentings.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.rentings.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.rentings.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-book-upload"></i>
                 <div data-i18n="Log Peminjaman">Log Peminjaman</div>
             </a>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.returns.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.returns.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.returns.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-book-download"></i>
                 <div data-i18n="Pengembalian">Pengembalian</div>
             </a>
@@ -72,7 +72,7 @@
             <span class="menu-header-text" data-i18n="Pengaturan">Pengaturan</span>
         </li>
         <li class="menu-item {{ request()->routeIs('panel.settings.*') ? 'active' : '' }}">
-            {{-- <a href="{{ route('panel.settings.index') }}" class="menu-link"> --}}
+            <a href="{{ route('panel.settings.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-settings"></i>
                 <div data-i18n="Pengaturan">Pengaturan</div>
             </a>
